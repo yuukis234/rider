@@ -13,3 +13,9 @@ vulkano-win = "0.20"
 winit = "0.24"
 vk-sys = "0.5.3"
 vulkano-shaders = "0.20"
+
+cgmath = "0.17"
+png = "0.15.0"
+time = "0.1.38"
+serde = { version="1.0.114", features = ["derive"] }
+ron = "0.6.0"
