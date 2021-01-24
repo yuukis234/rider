@@ -148,7 +148,7 @@ fn main() {
     );
 
     let (texture, tex_future) = {
-        let png_bytes = include_bytes!("greaseblizzard.png").to_vec();
+        let png_bytes = include_bytes!("img/greaseblizzard.png").to_vec();
         let cursor = Cursor::new(png_bytes);
         let decoder = png::Decoder::new(cursor);
         let (info, mut reader) = decoder.read_info().unwrap();
