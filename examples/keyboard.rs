@@ -236,6 +236,18 @@ fn main() {
         } => {
             recreate_swapchain = true;
         }
+        Event::WindowEvent {
+            event: WindowEvent::MouseWheel {
+                device_id,
+                delta,
+                phase,
+                modifiers,
+                ..
+            },
+            ..
+        } => {
+            println!("hello world");
+        }
         Event::RedrawEventsCleared => {
             previous_frame_end.as_mut().unwrap().cleanup_finished();
 
