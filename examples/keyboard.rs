@@ -8,6 +8,7 @@
 // according to those terms.
 
 extern crate winit;
+extern crate rider;
 
 use vulkano::buffer::{BufferUsage, CpuAccessibleBuffer};
 use vulkano::command_buffer::{AutoCommandBufferBuilder, DynamicState, SubpassContents};
@@ -246,8 +247,22 @@ fn main() {
             },
             ..
         } => {
-            println!("hello world");
+            rider::libs::devices::mouse::function();
         }
+
+        Event::WindowEvent {
+            event: WindowEvent::KeyboardInput {
+                device_id,
+                input,
+                is_synthetic,
+                ..
+            },
+            ..
+        } => {
+            println!("{:?}", input.virtual_keycode);
+        }
+
+
         Event::RedrawEventsCleared => {
             previous_frame_end.as_mut().unwrap().cleanup_finished();
 
@@ -283,7 +298,7 @@ fn main() {
                 recreate_swapchain = true;
             }
 
-            let clear_values = vec![[0.0, 0.0, 1.0, 1.0].into()];
+            let clear_values = vec![[0.0, 0.0, 0.0, 1.0].into()];
             let mut builder =
                 AutoCommandBufferBuilder::primary_one_time_submit(device.clone(), queue.family())
                     .unwrap();
