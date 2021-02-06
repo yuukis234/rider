@@ -39,6 +39,8 @@ use std::io::Cursor;
 
 use std::sync::Arc;
 
+use rider::libs::state::state::{Status};
+
 fn main() {
     // The start of this example is exactly the same as `triangle`. You should read the
     // `triangle` example if you haven't done so yet.
@@ -224,6 +226,8 @@ fn main() {
     let mut recreate_swapchain = false;
     let mut previous_frame_end = Some(tex_future.boxed());
 
+    let mut status = Status{state: false};
+
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent {
             event: WindowEvent::CloseRequested,
@@ -260,6 +264,7 @@ fn main() {
             ..
         } => {
             println!("{:?}", input.virtual_keycode);
+            println!("status: {:?}", status);
         }
 
 
