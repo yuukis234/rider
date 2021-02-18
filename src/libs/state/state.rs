@@ -1,4 +1,19 @@
-#[derive(Copy, Clone, Eq, PartialEq, Debug)]
-pub struct Status<T> {
-    pub state: T,
+#[derive(Clone, PartialEq, Debug)]
+pub struct Status <'a> {
+    pub hash: &'a str,
+    pub state: f64,
+}
+
+impl Status <'_> {
+    pub fn test(&self) -> f64 {
+        return 0.1
+    }
+
+    pub fn getkey(&self) -> f64 {
+        return self.state;
+    }
+
+    pub fn gethash(&self) -> &str {
+        return self.hash;
+    }
 }
