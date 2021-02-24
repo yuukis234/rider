@@ -1,3 +1,9 @@
+pub trait Animal {
+    fn talk(&self) {
+        println!("souzou ");
+    }
+}
+
 #[derive(Clone, PartialEq, Debug)]
 pub struct Status <'a> {
     pub hash: &'a str,
@@ -16,4 +22,8 @@ impl Status <'_> {
     pub fn gethash(&self) -> &str {
         return self.hash;
     }
+}
+
+impl Animal for Status <'_> {
+    fn talk(&self) {}
 }

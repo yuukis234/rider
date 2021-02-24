@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use rider::libs::state::state::{Status};
+    pub use rider::libs::state::state::{Status, Animal};
 
     #[test]
     fn object_status() {
