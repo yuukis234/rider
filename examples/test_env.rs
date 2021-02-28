@@ -72,7 +72,6 @@ struct TesterStruct {
     pub state: f64,
 }
 
-impl TestAnimal for TesterStruct {}
 
 impl TesterStruct {
     fn test(&self) {

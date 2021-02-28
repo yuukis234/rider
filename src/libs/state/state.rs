@@ -23,14 +23,3 @@ impl Status <'_> {
         return self.hash;
     }
 }
-
-impl Animal for Status <'_> {
-    fn talk(&self) {}
-}
-
-
-#[derive(Clone, PartialEq, Debug)]
-pub struct Controller <'a> {
-    pub key: &'a str,
-    pub obj: Box<Animal>
-}
