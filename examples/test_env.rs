@@ -66,20 +66,8 @@ impl Message {
     }
 }
 
-impl Animal for Message {}
 
-struct TesterStruct {
-    pub state: f64,
-}
-
-
-impl TesterStruct {
-    fn test(&self) {
-        println!("testest");
-    }
-}
 
 fn main() {
     let mut status = Status{hash:"test" ,state: 1.0};
-    let mut test_rc = Rc::new(TesterStruct{state: 2.12});
 }
