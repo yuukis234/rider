@@ -19,3 +19,9 @@ png = "0.15.0"
 time = "0.1.38"
 serde = { version="1.0.114", features = ["derive"] }
 ron = "0.6.0"
+
+quick-xml = "0.22.0"
+
+[[example]]
+name = "quick-xml"
+path = "examples/lib_test/quick-xml.rs"

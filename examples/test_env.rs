@@ -66,8 +66,39 @@ impl Message {
     }
 }
 
+struct Up{
+    up: i32,
+}
 
+struct Down {
+    down: i32,
+}
+
+struct Right {
+    right: i32,
+}
+
+struct Left {
+    left: i32,
+}
+
+enum GameAction {
+    Up {up: i32},
+    Down {down: i32},
+    Right {right: i32,},
+    Left {left: i32,},
+}
+
+#[derive(Clone, PartialEq, Debug)]
+struct Controller <'a> {
+    key: &'a str,
+    obj: &'a str,
+}
 
 fn main() {
     let mut status = Status{hash:"test" ,state: 1.0};
+    let mut controller_vec = vec!(Controller{key: "hello", obj: "world"});
+    controller_vec.push(Controller{key: "hello", obj: "world"});
+    let mut action_vector = vec!(GameAction::Up{up: 32});
+    action_vector.push(GameAction::Down{down: 32});
 }
