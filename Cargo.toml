@@ -25,3 +25,11 @@ quick-xml = "0.22.0"
 [[example]]
 name = "quick-xml"
 path = "examples/lib_test/quick-xml.rs"
+
+[[example]]
+name = "macro"
+path = "examples/lib_test/macro.rs"
+
+[[example]]
+name = "game_controller"
+path = "examples/game_lib/controller.rs"
