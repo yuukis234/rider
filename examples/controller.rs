@@ -262,8 +262,6 @@ fn main() {
             },
             ..
         } => {
-            controller_vec.push(Controller::MouseScroll{scroll: (delta[0], delta[1])});
-            println!("{:?}", delta);
         }
 
         Event::WindowEvent {
