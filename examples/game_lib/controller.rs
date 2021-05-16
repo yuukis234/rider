@@ -1,4 +1,6 @@
 use std::{thread, time};
+use std::rc::Rc;
+use std::cell::{Cell, RefCell};
 
 use winit::{
     event::{Event, KeyboardInput, WindowEvent},
@@ -17,6 +19,7 @@ const WAIT_TIME: time::Duration = time::Duration::from_millis(100);
 const POLL_SLEEP_TIME: time::Duration = time::Duration::from_millis(100);
 
 
+// 値の型を調べる関数
 fn type_of<T>(_: T) -> String{
     let a = std::any::type_name::<T>();
     return a.to_string();
@@ -33,10 +36,10 @@ impl AppEvents {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug)]
 struct Player {
     key_code: winit::event::VirtualKeyCode,
-    app_events: AppEvents,
+    app_events: RefCell<AppEvents>,
 }
 
 impl Player {
@@ -49,12 +52,12 @@ impl Player {
     pub fn escape(&mut self) {
         if (self.key_code == winit::event::VirtualKeyCode::Escape) {
             println!("keycode: escape");
-            self.app_events.close();
+            self.app_events.borrow_mut().close();
         }
     }
 
     pub fn close(&mut self) {
-        self.app_events.close();
+        self.app_events.borrow_mut().close();
     }
 }
 
@@ -75,7 +78,7 @@ fn main() {
     let mut mode = Mode::Wait;
     let mut request_redraw = false;
     let mut wait_cancelled = false;
-    let mut app = AppEvents{close_requested: false};
+    let mut app = RefCell::new(AppEvents{close_requested: false});
     let mut player = Player{key_code: winit::event::VirtualKeyCode::Sleep, app_events: app};
     
 
@@ -116,10 +119,10 @@ fn main() {
                 _ => (),
             },
             Event::MainEventsCleared => {
-                if request_redraw && !wait_cancelled && !player.app_events.close_requested {
+                if request_redraw && !wait_cancelled && !player.app_events.get_mut().close_requested {
                     window.request_redraw();
                 }
-                if player.app_events.close_requested {
+                if player.app_events.get_mut().close_requested {
                     *control_flow = ControlFlow::Exit;
                 }
             }
