@@ -89,7 +89,7 @@ fn main() {
         Some(&number) => println!(" test Calling Daniel: {:?}", number),
         _ => println!("Don't have Daniel's number."),
     }
-    println!("status: {:?}", status);
+    // println!("status: {:?}", status);
     println!("two_point: {:?}", two_point);
     println!("rectangle: {:?}", rectangle);
     println!("{:?}", rectangle.area());

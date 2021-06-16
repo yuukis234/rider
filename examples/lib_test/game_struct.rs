@@ -1,3 +1,4 @@
+/* ***************************** */
 // Copyright (c) 2016 The vulkano developers
 // Licensed under the Apache License, Version 2.0
 // <LICENSE-APACHE or
@@ -8,7 +9,9 @@
 // according to those terms.
 
 extern crate winit;
-extern crate rider;
+
+// ************************************************
+
 
 use vulkano::buffer::{BufferUsage, CpuAccessibleBuffer};
 use vulkano::command_buffer::{AutoCommandBufferBuilder, DynamicState, SubpassContents};
@@ -34,10 +37,56 @@ use winit::event::{Event, WindowEvent};
 use winit::event_loop::{ControlFlow, EventLoop};
 use winit::window::{Window, WindowBuilder};
 
+// ************************************************
+
+// ************************************************
+
 use png;
 use std::io::Cursor;
 
+// ************************************************
+
 use std::sync::Arc;
+use std::env;
+use std::fs::File;
+use std::io::prelude::*;
+
+
+/* ***************************** */
+
+// #構造体
+
+struct Rider {
+    object: Object,
+    charactor: Charactor,
+}
+
+
+// MEMO: オブジェクトはpathの格納時に型も一緒に検知できるようにする。画像、3Dデータを格納するようにする
+struct Object {
+    // オブジェクトが格納されているPATHと利用するプログラムの型を格納する
+    path: String,
+    o_type: String,
+    status: Status,
+}
+
+struct Charactor {
+    path: String,
+    o_type: String,
+    status: Status,
+}
+
+struct Player {
+    path: String,
+    o_type: String,
+    status: Status,
+}
+
+// MEMO: 設定時にマクロを使って新しい型を生成する必要がありそう
+struct Status {
+   o_type: String,
+}
+
 
 
 fn main() {
@@ -238,32 +287,6 @@ fn main() {
         } => {
             recreate_swapchain = true;
         }
-        Event::WindowEvent {
-            event: WindowEvent::MouseWheel {
-                device_id,
-                delta,
-                phase,
-                modifiers,
-                ..
-            },
-            ..
-        } => {
-            rider::libs::devices::mouse::function();
-        }
-
-        Event::WindowEvent {
-            event: WindowEvent::KeyboardInput {
-                device_id,
-                input,
-                is_synthetic,
-                ..
-            },
-            ..
-        } => {
-            println!("{:?}", input.virtual_keycode);
-        }
-
-
         Event::RedrawEventsCleared => {
             previous_frame_end.as_mut().unwrap().cleanup_finished();
 
@@ -299,7 +322,7 @@ fn main() {
                 recreate_swapchain = true;
             }
 
-            let clear_values = vec![[0.0, 0.0, 0.0, 1.0].into()];
+            let clear_values = vec![[0.0, 0.0, 1.0, 1.0].into()];
             let mut builder =
                 AutoCommandBufferBuilder::primary_one_time_submit(device.clone(), queue.family())
                     .unwrap();

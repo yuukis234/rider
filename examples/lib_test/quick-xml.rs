@@ -19,22 +19,28 @@ struct Rider {
 struct Object {
     // オブジェクトが格納されているPATHと利用するプログラムの型を格納する
     path: String,
-    type: String,
+    o_type: String,
     status: Status,
 }
 
-struct Charctor {
+struct Charactor {
     path: String,
-    type: String,
+    o_type: String,
+    status: Status,
+}
+
+struct Player {
+    path: String,
+    o_type: String,
     status: Status,
 }
 
 // MEMO: 設定時にマクロを使って新しい型を生成する必要がありそう
-struct Status { 
-
+struct Status {
+   o_type: String,
 }
 
-    
+
 /* ***************************** */
 
 fn main() {
@@ -56,7 +62,7 @@ fn main() {
     f.read_to_string(&mut contents).expect("something went wrong reading the file");
 
     println!("With text:\n{}", contents);
-    
+
     // xmlの文字列
     let xml = r#"<tag1 att1 = "test">
                 <tag2><!--Test comment-->Test</tag2>
@@ -96,6 +102,4 @@ fn main() {
         buf.clear();
     }
 
-    let test = crates_io();
-    println!("{:?}", test);
 }
