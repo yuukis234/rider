@@ -46,10 +46,14 @@ use std::rc::Rc;
 use rider::libs::state::state::*;
 use rider::libs::devices::controller::*;
 
+// +****************************************
+// 型を出力をする関数
+
 fn print_typename<T>(_: T) {
     println!("{}", std::any::type_name::<T>());
 }
 
+// +****************************************
 
 fn main() {
     // The start of this example is exactly the same as `triangle`. You should read the
@@ -87,6 +91,10 @@ fn main() {
     .unwrap();
     let queue = queues.next().unwrap();
 
+    // +****************************************
+    // 画像の初期化
+
+
     let (mut swapchain, images) = {
         let caps = surface.capabilities(physical).unwrap();
         let alpha = caps.supported_composite_alpha.iter().next().unwrap();
@@ -122,6 +130,9 @@ fn main() {
         device.clone(),
         BufferUsage::all(),
         false,
+        // 展開する領域を指定している
+        // 1列名、2列目のx軸を変更すると横に画像が展開される
+        // 1列名、2列目のy軸を変更すると縦に画像が展開される
         [
             Vertex {
                 position: [-0.5, -0.5],
@@ -162,8 +173,11 @@ fn main() {
         .unwrap(),
     );
 
+    // ++****************************************
+    // 画像をロードしている
+
     let (texture, tex_future) = {
-        let png_bytes = include_bytes!("img/greaseblizzard.png").to_vec();
+        let png_bytes = include_bytes!("img/aka.png").to_vec();
         let cursor = Cursor::new(png_bytes);
         let decoder = png::Decoder::new(cursor);
         let (info, mut reader) = decoder.read_info().unwrap();
@@ -185,6 +199,8 @@ fn main() {
         .unwrap()
     };
 
+    // ++****************************************
+
     let sampler = Sampler::new(
         device.clone(),
         Filter::Linear,
@@ -199,6 +215,11 @@ fn main() {
         0.0,
     )
     .unwrap();
+
+    // +****************************************
+
+    // +****************************************
+    // 初期化の結合が起こっている
 
     let pipeline = Arc::new(
         GraphicsPipeline::start()
@@ -233,9 +254,14 @@ fn main() {
     let mut framebuffers =
         window_size_dependent_setup(&images, render_pass.clone(), &mut dynamic_state);
 
-    let mut recreate_swapchain = false;
-    let mut previous_frame_end = Some(tex_future.boxed());
+    let mut recreate_swapchain              = false;
+    let mut previous_frame_end              = Some(tex_future.boxed());
     let mut controller_vec: Vec<Controller> = Vec::new();
+
+    // +****************************************
+
+    // +****************************************
+    // メインループ
 
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent {
@@ -313,6 +339,7 @@ fn main() {
                 recreate_swapchain = true;
             }
 
+            // clear_valuesで背景色を変更をすることができる
             let clear_values = vec![[0.0, 0.0, 1.0, 1.0].into()];
             let mut builder =
                 AutoCommandBufferBuilder::primary_one_time_submit(device.clone(), queue.family())
@@ -362,6 +389,7 @@ fn main() {
         _ => (),
     });
 }
+// +****************************************
 
 /// This method is called once during initialization, then again whenever the window is resized
 fn window_size_dependent_setup(
@@ -372,7 +400,7 @@ fn window_size_dependent_setup(
     let dimensions = images[0].dimensions();
 
     let viewport = Viewport {
-        origin: [0.0, 0.0],
+        origin: [100.0, 0.0],
         dimensions: [dimensions[0] as f32, dimensions[1] as f32],
         depth_range: 0.0..1.0,
     };
